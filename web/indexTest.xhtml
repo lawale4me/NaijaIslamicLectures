@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"  
+                xmlns:p="http://primefaces.org/ui"
+                >             
+            <ui:define name="west">  
+             <p:panel header="Lecture Dashboard" style="width: 1000px;">                  
+                    Lecturer<br/>
+                    <p:selectOneMenu id="lecturerId"  value="#{lecturerMBean.lecturerId}"  > 
+                        <p:ajax process="@this" partialSubmit="true" listener="#{lecturerMBean.handleChange}" update="lecture" />                        
+                        <f:selectItem itemLabel="Click to Pick a Lecturer" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{lecturerMBean.lecturersList}"  var="lect" itemValue="#{lect.lecturerId}" 
+                                       itemLabel="#{lect.fullName}" />
+                    </p:selectOneMenu>
+                    
+                    <p:separator style="border: 2" />
+                    
+                    Double click to play<br/>
+                    <p:selectOneListbox id="lecture" value="#{lecturerMBean.lectureId}" >                             
+                        <p:ajax process="@this" partialSubmit="true"  listener="#{lecturerMBean.handlePlay}" update="iframe-holder" />
+                        <f:selectItems value="#{lecturerMBean.lectureList}" var="lect1" itemValue="#{lect1.lectureId}" 
+                                       itemLabel="#{lect1.title}"/>
+                    </p:selectOneListbox>
+                    <p:separator/>
+                    <p:commandButton value="Add a Lecturer" type="button" onclick="PF('dlg1').show();" /><br/>
+                    <p:separator/>
+                    <p:commandButton value="Add a Lecture" type="button" onclick="PF('dlg2').show();" /><br/>                    
+                    </p:panel> 
+            </ui:define>            
+            <ui:define name="content">  
+                <form id="kil">
+            <p:panel header="Video Dashboard" style="width: 1000px;">
+            <h:panelGroup id="iframe-holder" layout="block" style="display:block; text-align:center" >
+                <iframe src="#{lecturerMBean.lecture.url}" allowfullscreen="" frameborder="0" height="360" width="640">
+                    Iframes not supported
+                    </iframe>
+            </h:panelGroup>             
+            </p:panel>
+            </form>
+            </ui:define>
+            
+</ui:composition>

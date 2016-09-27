@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+        <style type="text/css" media="all">
+           
+        </style>
+    </h:head>
+    <h:body  > 
+        <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    Islamic video lectures
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="50" closable="true" collapsible="true">
+                    Laa Technologies
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="375"  header="Lecturers" collapsible="true">                                                            
+                    
+                    <p:outputLabel for="custt" value="Lecturer " />                    
+                    <p:selectOneMenu id="custt"  value="#{lecturerMBean.lecturerId}"  > 
+                        <p:ajax listener="#{lecturerMBean.handleChange}" update="lecture" />                        
+                        <f:selectItem itemLabel="Click to Pick a Lecturer" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{lecturerMBean.lecturersList}" 
+                                       var="cust" itemValue="#{cust.lecturerId}" 
+                                       itemLabel="#{cust.fullName}..(#{cust.alias})"/>
+                    </p:selectOneMenu>
+                    
+                    <p:separator/>
+                    
+                    <h:outputLabel for="lecture" value="Choose A Lecture " />
+                               <h:selectManyListbox id="lecture"  converter="javax.faces.Integer"                                      
+                                     value="#{lectureMBean.lectureId}"
+                                     title="product_fk"
+                                     requiredMessage="No Lecture Selected">                     
+                                   <f:selectItems value="#{lectureMBean.lecturesList}" 
+                                                  var="lect" itemValue="#{lect.lectureId}" 
+                                                  itemLabel="#{lect.title}"/>
+                                </h:selectManyListbox>                    
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+                    <h:panelGroup id="iframe-holder" layout="block" style="display:block; text-align:center" >
+                <iframe src="#{playMBean.url}" allowfullscreen="" frameborder="0" height="360" width="640">
+                    Iframes not supported
+                    </iframe>
+            </h:panelGroup>
+                </p:layoutUnit>
+
+            </p:layout>
+            
+            
+    </h:body>
+</html>
+
